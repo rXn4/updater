@@ -26,8 +26,8 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QWebView" name="webView" native="true">
-          <property name="url" stdset="0">
+         <widget class="QWebView" name="webView">
+          <property name="url">
            <url>
             <string>https://twitter.com/intent/user?screen_name=ACreloaded</string>
            </url>
@@ -184,7 +184,7 @@
   <customwidget>
    <class>QWebView</class>
    <extends>QWidget</extends>
-   <header>QtWebKit/QWebView</header>
+   <header>QtWebKitWidgets/QWebView</header>
   </customwidget>
  </customwidgets>
  <resources/>

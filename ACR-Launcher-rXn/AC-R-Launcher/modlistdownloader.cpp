@@ -1,12 +1,15 @@
 #include "modlistdownloader.h"
 
-ModListDownloader::ModListDownloader(QString url, ConfigData *data) : QObject()
+ModListDownloader::ModListDownloader(QString url) : QObject()
 {
     qna = new QNetworkAccessManager();
     qnreq = new QNetworkRequest(QUrl(url));
+    connect(qna, SIGNAL(finished(QNetworkReply*)), this, SLOT(parseModList(QNetworkReply*)));
+
+}
+
+void ModListDownloader::start() {
     qna->get(*qnreq);
-    qna->connect(qna, SIGNAL(finished(QNetworkReply*)), this, SLOT(parseModList(QNetworkReply*)));
-    this->data = data;
 }
 
 QNetworkReply *ModListDownloader::getData() {
@@ -19,7 +22,7 @@ void ModListDownloader::parseModList(QNetworkReply *list) {
     bool somethingDone = false;
     ModEntry tmp;
     QString currentLine = list->readLine();
-    QString keywords = "start_mod modname modversion moddesc modurl end_mod";
+    QString keywords = "start_mod mod_name mod_version mod_desc mod_url end_mod";
     while(!list->atEnd()) {
         currentLine = currentLine.trimmed();
         somethingDone = false;
@@ -85,7 +88,7 @@ void ModListDownloader::parseModList(QNetworkReply *list) {
             }
             if(currentLine.contains("#end_mod", Qt::CaseInsensitive)) {
                 somethingDone = true;
-                data->addToAvailableMods(tmp);
+                parsedMods.append(tmp);
                 mod_started = false;
                 currentLine = list->readLine();
             }
@@ -98,6 +101,6 @@ void ModListDownloader::parseModList(QNetworkReply *list) {
 
     }
 
-    emit isReady();
+    emit isReady(parsedMods);
 
 }

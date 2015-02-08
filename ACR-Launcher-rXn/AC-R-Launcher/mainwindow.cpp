@@ -21,6 +21,12 @@ void MainWindow::on_pushButton_clicked()
     this->close();
 }
 
+//Clean exit
+void MainWindow::closeEvent(QCloseEvent *event) {
+    mw->writeToDisk();
+
+}
+
 //Starting the game and the server
 void MainWindow::on_pB_start_client_clicked()
 {
@@ -42,11 +48,11 @@ void MainWindow::on_ready_to_fill_modlist()
 {
     ui->list_aviable_mods->setEnabled(true);
     ui->list_aviable_mods->clear();
-    ui->list_aviable_mods->addItems(mw->avialableMods());
+    ui->list_aviable_mods->addItems(mw->getAvialableMods());
 
     ui->list_installed_mods->setEnabled(true);
     ui->list_installed_mods->clear();
-    ui->list_installed_mods->addItems(mw->installedMods());
+    ui->list_installed_mods->addItems(mw->getInstalledMods());
 }
 
 void MainWindow::on_list_aviable_mods_itemDoubleClicked(QListWidgetItem *item)
@@ -56,7 +62,7 @@ void MainWindow::on_list_aviable_mods_itemDoubleClicked(QListWidgetItem *item)
     if(md.result() != 0) {
         connect(mw, SIGNAL(installerReady(QString)), this, SLOT(on_MainWorker_installerReady(QString)));
         QMessageBox::information(this, "ACR Launcher", mw->installMod(item->text()), QMessageBox::Ok);
-
+        on_ready_to_fill_modlist();
     }
 }
 

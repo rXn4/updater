@@ -24,7 +24,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+    void closeEvent(QCloseEvent * event);
 private slots:
     //UI slots
     void on_pushButton_clicked();
@@ -48,6 +48,8 @@ private slots:
 
     //Slot for installing mods
     void on_MainWorker_installerReady(QString message);
+
+    void on_MainWorker_closing();
 
 private:
     Ui::MainWindow *ui;

@@ -15,7 +15,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     mainworker.cpp \
-    configdata.cpp \
     serverconsole.cpp \
     downloaddialog.cpp \
     modlistdownloader.cpp \
@@ -23,11 +22,11 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     mainworker.h \
-    configdata.h \
     serverconsole.h \
     downloaddialog.h \
     modlistdownloader.h \
-    modinstalldialog.h
+    modinstalldialog.h \
+    modentry.h
 
 FORMS    += mainwindow.ui \
     serverconsole.ui \
